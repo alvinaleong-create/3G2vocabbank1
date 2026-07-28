@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3PON Vocabulary Bank (Jul-Aug 2026)</title>
+<style>
+:root{
+  --bg:#f5f7fb; --panel:#ffffff; --ink:#1d2939; --muted:#667085;
+  --brand:#4f46e5; --brand2:#7c3aed; --good:#087a55; --goodbg:#e8f7f1;
+  --bad:#b42318; --badbg:#fff0ef; --line:#e4e7ec; --shadow:0 12px 30px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:34px 24px}
+.header-inner{max-width:1180px;margin:auto}
+h1{margin:0 0 8px;font-size:clamp(28px,4vw,44px)}
+header p{margin:0;opacity:.92}.mobile-open-note{margin-top:8px;font-size:13px;opacity:.82}
+.layout{max-width:1180px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:290px 1fr;gap:22px}
+.sidebar,.main{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.sidebar{padding:18px;height:max-content;position:sticky;top:16px}
+.stat{padding:14px;border-radius:14px;background:#f8f7ff;margin-bottom:12px}
+.stat strong{font-size:26px;display:block}
+.stat small{display:block;margin-top:8px;line-height:1.35}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}.stat-grid .mini-stat:last-child{grid-column:1 / -1}
+.mini-stat{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.mini-stat span{display:block;color:var(--muted);font-size:12px}.mini-stat small{font-size:10px;color:#777;font-weight:400;line-height:1.2}
+.mini-stat strong{display:block;font-size:20px;margin-top:3px}
+.scorebook-btn{width:100%;margin-bottom:10px}
+.progress{height:10px;background:#ebeef3;border-radius:999px;overflow:hidden;margin-top:8px}
+.progress > div{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0%}
+.quiz-selector{margin-top:16px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.quiz-selector label{display:block;font-size:13px;font-weight:750;color:var(--muted);margin-bottom:7px}
+.quiz-select{width:100%;padding:11px 38px 11px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font-weight:700;font-size:14px;cursor:pointer}
+.quiz-select:focus{outline:3px solid rgba(99,91,255,.16);border-color:var(--brand)}
+.quiz-select-note{display:block;margin-top:7px;font-size:12px;color:var(--muted);line-height:1.35}
+.main{padding:24px}
+.toprow{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#f1efff;color:var(--brand);font-weight:750;font-size:13px}
+.question-card{margin-top:20px;padding:22px;border:1px solid var(--line);border-radius:16px}
+.q-number{font-size:13px;color:var(--muted);font-weight:700}
+.prompt{font-size:20px;line-height:1.5;margin:10px 0 18px}
+.options{display:grid;gap:10px}
+.option{border:1px solid var(--line);background:#fff;padding:13px 14px;border-radius:12px;cursor:pointer;text-align:left;font-size:16px}
+.option:hover{border-color:#b8b4ff;background:#fafaff}
+.option.selected{border:2px solid var(--brand);background:#f4f2ff}
+.option.correct{border:2px solid var(--good);background:var(--goodbg)}
+.option.incorrect{border:2px solid var(--bad);background:var(--badbg)}
+.fill-input{width:100%;max-width:520px;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:17px}
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.story-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:18px 0 4px;padding:14px 16px;border-left:5px solid var(--brand);background:#faf9ff;border-radius:10px}.story-heading strong{font-size:18px}
+.story-text{font-size:18px;line-height:2.05;background:#fcfcfd;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:14px}
+.story-sentence{display:inline}
+.story-blank{display:inline-block;width:150px;min-width:110px;border:0;border-bottom:2px solid var(--brand);background:#f7f5ff;padding:5px 8px;margin:0 4px;border-radius:7px 7px 0 0;font:inherit;text-align:center}
+.story-blank.correct{border-bottom-color:var(--good);background:var(--goodbg)}
+.story-blank.incorrect{border-bottom-color:var(--bad);background:var(--badbg)}
+.story-feedback-list{margin-top:18px;display:grid;gap:9px}
+.story-feedback-item{padding:11px 13px;border-radius:10px;line-height:1.4}
+.story-feedback-item.good{background:var(--goodbg);color:var(--good)}
+.story-feedback-item.bad{background:var(--badbg);color:var(--bad)}
+.word-chip{padding:7px 10px;border-radius:999px;background:#f2f4f7;color:#344054;font-size:14px}
+.feedback{display:none;margin-top:16px;padding:14px;border-radius:12px;line-height:1.45}
+.feedback.good{display:block;background:var(--goodbg);color:var(--good)}
+.feedback.bad{display:block;background:var(--badbg);color:var(--bad)}
+.controls{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap}
+button.primary,button.secondary,button.danger{border:0;padding:11px 16px;border-radius:11px;font-weight:750;cursor:pointer}
+.sound-toggle{width:100%;border:1px solid var(--line);background:#fff;padding:11px 12px;border-radius:11px;cursor:pointer;font-weight:700;color:var(--ink);margin-bottom:10px}
+button.primary{background:var(--brand);color:#fff}
+button.secondary{background:#eef0f4;color:var(--ink)}
+button.danger{background:#fff0ef;color:var(--bad)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.summary{padding:26px;text-align:center}
+.summary h2{font-size:30px;margin-bottom:8px}
+.score-ring{width:140px;height:140px;border-radius:50%;display:grid;place-items:center;margin:22px auto;background:conic-gradient(var(--brand) 0deg,#eceef2 0deg)}
+.score-ring-inner{width:110px;height:110px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:26px;font-weight:800}
+.review{margin-top:18px;text-align:left}
+.review-item{border-top:1px solid var(--line);padding:14px 0}
+.score-table{width:100%;border-collapse:collapse;margin-top:16px}
+.score-table th,.score-table td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.score-table th{font-size:13px;color:var(--muted)}
+.status-pill{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:750}
+.status-mastered{background:var(--goodbg);color:var(--good)}
+.status-almost{background:#eef4ff;color:#3538cd}
+.status-learning{background:#fff7e6;color:#9a5b00}
+.status-unlearnt{background:#f2f4f7;color:#667085}
+.history-chip{display:inline-block;margin:2px 3px 2px 0;padding:4px 7px;border-radius:8px;background:#f2f4f7;font-size:12px}
+.study-set-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.study-tab{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:10px;cursor:pointer;font-weight:700}
+.study-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.word-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
+.word-study-card{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}
+.word-study-card h3{margin:0 0 8px;font-size:21px}
+.word-study-card .meaning{font-weight:650;line-height:1.45}
+.word-study-card .example{margin-top:10px;color:var(--muted);line-height:1.55}
+.word-study-card .number{display:inline-block;margin-bottom:8px;font-size:12px;font-weight:800;color:var(--brand)}
+.study-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{position:static}.toprow{display:block}.main{padding:18px}}
+
+.flashcard-shell{max-width:720px;margin:24px auto}
+.flashcard-progress{text-align:center;color:var(--muted);font-size:14px;margin-bottom:10px}
+.flashcard{min-height:360px;border:2px solid #d9d6fe;border-radius:24px;background:linear-gradient(145deg,#fff,#f7f5ff);padding:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .18s ease,border-color .18s ease}
+.flashcard:hover{transform:translateY(-2px);border-color:var(--brand)}
+.flashcard-word{font-size:clamp(34px,6vw,58px);font-weight:800;color:var(--brand);margin:0}
+.flashcard-hint{margin-top:12px;color:var(--muted);font-size:14px}
+.flashcard-details{width:100%;margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.flashcard-details h4{margin:12px 0 5px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.flashcard-details p{margin:0;font-size:18px;line-height:1.55}
+.flashcard-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.learned-btn.is-learned{background:var(--good);color:#fff;border-color:var(--good)}
+.set-selector{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.scorebook-tabs{display:flex;gap:8px;margin:20px 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.score-tab{border:0;background:#f2f4f7;color:var(--ink);padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+.score-tab.active{background:var(--brand);color:#fff}
+.score-panel{display:none}.score-panel.active{display:block}
+.mastery-pagination{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+.history-scroll{max-height:330px;overflow:auto;border:1px solid var(--line);border-radius:12px}
+.history-scroll table{margin:0}
+.history-scroll thead th{position:sticky;top:0;background:#f8fafc;z-index:1}
+@media(max-width:700px){.flashcard{min-height:320px;padding:24px}.flashcard-actions button{flex:1}.scorebook-tabs{flex-wrap:wrap}}
+
+
+.flashcard-picture{
+  width:180px;height:130px;margin:0 auto 18px;border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#fff8df,#eef4ff);
+  border:1px solid #e6e1c8;box-shadow:0 8px 18px rgba(55,65,81,.08);
+}
+.flashcard-picture span{font-size:64px;line-height:1;filter:drop-shadow(0 4px 3px rgba(0,0,0,.12))}
+.flashcard-picture-label{font-size:12px;color:var(--muted);margin-top:-10px;margin-bottom:14px}
+
+
+.encouragement-card{
+  margin:14px 0;padding:14px;border-radius:16px;
+  background:linear-gradient(145deg,#fff8d8,#f2f7ff);
+  border:1px solid #eadf9b;text-align:center;
+}
+.encouragement-card strong{display:block;font-size:22px;margin:3px 0}
+.encouragement-card p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.4}
+.star-pop{animation:starPop .55s ease}
+@keyframes starPop{
+  0%{transform:scale(.75);opacity:.4}
+  60%{transform:scale(1.14);opacity:1}
+  100%{transform:scale(1)}
+}
+
+
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+body{overflow-x:hidden}
+button,input{font:inherit}
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+input{font-size:16px}
+@media(max-width:800px){
+  header{padding:24px 18px}
+  .layout{margin:14px auto;padding:0 10px;gap:14px}
+  .sidebar,.main{border-radius:14px}
+  .sidebar{padding:14px}
+  .main{padding:14px}
+  .question-card{padding:16px}
+  .story-text{font-size:16px;line-height:1.85;padding:16px}
+  .story-blank{width:125px;min-width:95px;margin:3px 2px}
+  .controls{flex-direction:column}
+  .controls>div{display:flex;gap:8px;flex-wrap:wrap}
+  .controls button{width:100%}
+  .toprow button{width:100%;margin-top:12px}
+  .flashcard-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .flashcard-actions button{width:100%}
+  .score-table{min-width:650px}
+  .history-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .word-bank{max-height:150px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>3PON Vocabulary Bank (Jul-Aug 2026)</h1>
+    <p>Learn vocabulary through sentences and stories, receive immediate feedback, and track mastery over time.</p>
+    <p class="mobile-open-note">📱 On mobile, open this file in Safari or Chrome rather than the Files preview.</p>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="stat">
+      <span class="muted">Overall vocabulary progress</span>
+      <strong id="overallScore">0%</strong>
+      <div class="progress"><div id="overallBar"></div></div>
+      <small class="muted">Learning words receive partial credit, almost-mastered words receive more credit, and mastered words receive full credit.</small>
+    </div>
+    <div class="stat-grid">
+      <div class="mini-stat"><span>🏆 Mastered<br><small>≥2 attempts & ≥80% accuracy</small></span><strong id="masteredCount">0</strong></div>
+      <div class="mini-stat"><span>✨ Almost mastered<br><small>≥70% accuracy</small></span><strong id="almostCount">0</strong></div>
+      <div class="mini-stat"><span>🌱 Learning<br><small>Attempted but still practising</small></span><strong id="learningCount">0</strong></div>
+      <div class="mini-stat"><span>📖 Not learnt</span><strong id="unlearntCount">0</strong></div>
+      <div class="mini-stat"><span>Quizzes done</span><strong id="completedCount">0 / 14</strong></div>
+    </div>
+    <div class="encouragement-card" id="encouragementCard">
+      <span>⭐ Learning Stars</span>
+      <strong id="starCount">0</strong>
+      <p id="encouragementMessage">Every correct answer earns a star. Keep going!</p>
+    </div>
+    <button class="secondary scorebook-btn" id="wordBankBtn">📚 Learn Word Bank</button>
+    <button class="secondary scorebook-btn" id="scorebookBtn">📊 View Scorebook</button>
+    <button class="sound-toggle" id="soundToggle" aria-pressed="true">🔊 Sound: On</button>
+    <button class="danger" id="resetAll">Reset all progress</button>
+    <div class="quiz-selector">
+      <label for="quizSelect">📝 Choose a quiz</label>
+      <select class="quiz-select" id="quizSelect" aria-label="Choose a vocabulary quiz"></select>
+      <small class="quiz-select-note" id="quizSelectNote">Select a quiz to begin.</small>
+    </div>
+  </aside>
+
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const quizzes = [{"id": "mcq1", "title": "Quiz 1: Meaning in Context", "type": "mcq", "description": "Choose the option that best explains the highlighted word.", "questions": [{"prompt": "After years of ruling the kingdom, the old king decided to <strong>abdicate</strong>.", "options": ["strengthen his army", "give up his throne", "hide from his enemies", "appoint a new adviser"], "answer": 1, "explanation": "To abdicate means to formally give up a position of power, especially a throne."}, {"prompt": "Many people <strong>abhor</strong> cruelty towards animals.", "options": ["enjoy", "ignore", "hate", "misunderstand"], "answer": 2, "explanation": "To abhor something is to hate or strongly dislike it."}, {"prompt": "Because of the manager's sudden <strong>caprice</strong>, the meeting was cancelled without warning.", "options": ["careful planning", "sudden change of mind", "wise decision", "helpful advice"], "answer": 1, "explanation": "A caprice is a sudden and unpredictable change of mood or behaviour."}, {"prompt": "The teacher appreciated Marcus's <strong>candour</strong> when he admitted cheating during the test.", "options": ["honesty", "confidence", "intelligence", "bravery"], "answer": 0, "explanation": "Candour means openness and honesty."}, {"prompt": "The old factory has been <strong>defunct</strong> for almost twenty years.", "options": ["recently built", "no longer operating", "newly repaired", "carefully guarded"], "answer": 1, "explanation": "Defunct means no longer existing, operating or functioning."}, {"prompt": "Two hours had <strong>elapsed</strong> before the rescue team arrived.", "options": ["been wasted", "passed", "been measured", "been recorded"], "answer": 1, "explanation": "Elapsed means passed, especially in relation to time."}, {"prompt": "The smell of freshly baked bread <strong>emanated</strong> from the bakery.", "options": ["disappeared into", "spread out from", "remained inside", "collected around"], "answer": 1, "explanation": "Emanated means came or spread out from a source."}, {"prompt": "The long-standing <strong>feud</strong> between the two families affected the whole village.", "options": ["friendship", "competition", "bitter quarrel", "celebration"], "answer": 2, "explanation": "A feud is a prolonged and bitter quarrel."}, {"prompt": "There are many <strong>facets</strong> to this issue, so we should not rush to judge.", "options": ["solutions", "sides or aspects", "mistakes", "arguments"], "answer": 1, "explanation": "Facets are different sides or aspects of something."}, {"prompt": "The famous actor travelled <strong>incognito</strong> to avoid attracting attention.", "options": ["secretly under a hidden identity", "by private jet", "with bodyguards", "very quickly"], "answer": 0, "explanation": "Incognito means with one's identity concealed."}, {"prompt": "Ignoring the problem will only <strong>aggravate</strong> it.", "options": ["solve", "improve", "worsen", "hide"], "answer": 2, "explanation": "To aggravate a problem is to make it worse."}, {"prompt": "Everyone laughed because the magician's explanation sounded completely <strong>bizarre</strong>.", "options": ["sensible", "ordinary", "strange", "detailed"], "answer": 2, "explanation": "Bizarre means very strange or unusual."}, {"prompt": "During the flood, the school hall became a <strong>sanctuary</strong> for nearby residents.", "options": ["prison", "safe place", "playground", "hospital"], "answer": 1, "explanation": "A sanctuary is a place of safety or refuge."}, {"prompt": "Ella was so <strong>immersed</strong> in her novel that she did not hear her mother calling.", "options": ["deeply involved", "confused", "frightened", "disappointed"], "answer": 0, "explanation": "Immersed means deeply absorbed or involved."}, {"prompt": "A <strong>raucous</strong> cheer erupted when the winning goal was scored.", "options": ["soft", "loud and noisy", "polite", "nervous"], "answer": 1, "explanation": "Raucous means very loud, harsh and noisy."}]}, {"id": "fill1", "title": "Quiz 2: Fill in the Blanks", "type": "fill", "description": "Type the most suitable word. Spelling matters.", "wordBank": ["abdicate", "abhor", "caprice", "candour", "defunct", "elapsed", "emanated", "feud", "facets", "incognito", "aggravate", "bizarre", "sanctuary", "immersed", "raucous"], "questions": [{"prompt": "The queen chose to _____ after serving the country for forty years.", "answer": "abdicate", "explanation": "Abdicate means to give up a throne or position of power."}, {"prompt": "Many people _____ discrimination because it is unfair and harmful.", "answer": "abhor", "explanation": "Abhor means to hate strongly."}, {"prompt": "The child's sudden _____ meant that he no longer wanted the toy he had begged for earlier.", "answer": "caprice", "explanation": "Caprice is a sudden and unpredictable change."}, {"prompt": "I appreciate your _____, even though the truth was difficult to hear.", "answer": "candour", "explanation": "Candour means honesty and openness."}, {"prompt": "The cinema has been _____ ever since the new shopping mall opened.", "answer": "defunct", "explanation": "Defunct means no longer operating."}, {"prompt": "Only fifteen minutes had _____ before the fire alarm rang.", "answer": "elapsed", "explanation": "Elapsed means passed."}, {"prompt": "A delicious aroma _____ from the kitchen.", "answer": "emanated", "explanation": "Emanated means spread out from a source."}, {"prompt": "Their bitter _____ began over a piece of land many years ago.", "answer": "feud", "explanation": "A feud is a prolonged bitter quarrel."}, {"prompt": "Before making a decision, we should consider all the _____ of the problem.", "answer": "facets", "explanation": "Facets are different aspects."}, {"prompt": "The millionaire attended the event _____ so nobody recognised her.", "answer": "incognito", "explanation": "Incognito means with one's identity hidden."}, {"prompt": "Shouting at your younger brother will only _____ the situation.", "answer": "aggravate", "explanation": "Aggravate means make worse."}, {"prompt": "His explanation was so _____ that nobody believed it.", "answer": "bizarre", "explanation": "Bizarre means strange or unusual."}, {"prompt": "The cave provided a _____ during the thunderstorm.", "answer": "sanctuary", "explanation": "A sanctuary is a safe place."}, {"prompt": "Chloe became so _____ in painting that she forgot about dinner.", "answer": "immersed", "explanation": "Immersed means deeply involved."}, {"prompt": "The stadium became _____ after the referee blew the final whistle.", "answer": "raucous", "explanation": "Raucous means loud and noisy."}]}, {"id": "mcq2", "title": "Quiz 3: Meaning in Context", "type": "mcq", "description": "Choose the option that best explains the highlighted word.", "questions": [{"prompt": "The bright yellow scarf perfectly <strong>complemented</strong> her navy-blue dress.", "options": ["ruined", "matched well with", "covered", "replaced"], "answer": 1, "explanation": "Complement means to combine well with something and improve its appearance."}, {"prompt": "Many students work part-time to <strong>supplement</strong> their allowance.", "options": ["reduce", "replace", "add to", "waste"], "answer": 2, "explanation": "Supplement means to add something extra to increase or improve it."}, {"prompt": "Climbing the mountain was a <strong>strenuous</strong> activity.", "options": ["relaxing", "difficult and tiring", "exciting", "dangerous"], "answer": 1, "explanation": "Strenuous means requiring great effort or energy."}, {"prompt": "Please do not <strong>agitate</strong> the dog while it is eating.", "options": ["calm", "feed", "annoy or disturb", "protect"], "answer": 2, "explanation": "Agitate means to disturb, upset or provoke."}, {"prompt": "Heavy traffic <strong>impeded</strong> the ambulance.", "options": ["delayed or obstructed", "guided", "followed", "assisted"], "answer": 0, "explanation": "Impede means to slow down or obstruct progress."}, {"prompt": "The child laughed <strong>hysterically</strong> after hearing the joke.", "options": ["calmly", "with uncontrollable emotion", "quietly", "politely"], "answer": 1, "explanation": "Hysterically means with extreme, uncontrolled emotion."}, {"prompt": "The politicians argued <strong>heatedly</strong> throughout the debate.", "options": ["calmly", "angrily and intensely", "secretly", "carelessly"], "answer": 1, "explanation": "Heatedly means in an angry or excited manner."}, {"prompt": "She searched <strong>desperately</strong> for her missing passport.", "options": ["lazily", "urgently and anxiously", "casually", "happily"], "answer": 1, "explanation": "Desperately means with great urgency or distress."}, {"prompt": "We <strong>savoured</strong> every bite of the delicious cake.", "options": ["enjoyed slowly", "swallowed quickly", "disliked", "ignored"], "answer": 0, "explanation": "Savoured means enjoyed something fully and appreciatively."}, {"prompt": "We rested in the <strong>arbour</strong> during the hot afternoon.", "options": ["cave", "shady garden shelter", "classroom", "bridge"], "answer": 1, "explanation": "An arbour is a shaded garden structure, often covered by climbing plants."}, {"prompt": "The table was <strong>draped</strong> with a white cloth.", "options": ["loosely covered", "cleaned", "painted", "broken"], "answer": 0, "explanation": "Draped means covered loosely with cloth."}, {"prompt": "The complicated instructions left everyone <strong>perplexed</strong>.", "options": ["confident", "confused", "angry", "excited"], "answer": 1, "explanation": "Perplexed means confused or puzzled."}, {"prompt": "The witness answered the lawyer's questions <strong>guardedly</strong>.", "options": ["openly", "cautiously", "loudly", "proudly"], "answer": 1, "explanation": "Guardedly means cautiously and without revealing too much."}, {"prompt": "Hikers should be <strong>wary of</strong> snakes in the forest.", "options": ["careless about", "cautious about", "excited by", "interested in"], "answer": 1, "explanation": "Wary of means cautious about possible danger."}, {"prompt": "He was rushed to hospital because of <strong>acute</strong> chest pain.", "options": ["mild", "severe and intense", "imaginary", "permanent"], "answer": 1, "explanation": "Acute can mean severe or intense, often with sudden onset."}]}, {"id": "fill2", "title": "Quiz 4: Fill in the Blanks", "type": "fill", "description": "Type the most suitable word or phrase.", "wordBank": ["agitate", "perplexed", "desperately", "strenuous", "guardedly", "complement", "draped", "impede", "acute", "heatedly", "hysterically", "arbour", "supplement", "savoured", "wary of"], "questions": [{"prompt": "Extra reading helped _____ her understanding of the topic.", "answer": "supplement", "explanation": "Supplement means add to or enhance."}, {"prompt": "Carrying heavy boxes upstairs was extremely _____.", "answer": "strenuous", "explanation": "Strenuous means physically demanding."}, {"prompt": "Loud music may _____ the baby.", "answer": "agitate", "explanation": "Agitate means disturb or upset."}, {"prompt": "Thick fog continued to _____ traffic along the expressway.", "answer": "impede", "explanation": "Impede means obstruct or slow down."}, {"prompt": "The audience laughed _____ during the comedy show.", "answer": "hysterically", "explanation": "Hysterically means with uncontrolled emotion."}, {"prompt": "The committee discussed the issue _____ for nearly two hours.", "answer": "heatedly", "explanation": "Heatedly means angrily or intensely."}, {"prompt": "The lost child looked _____ for her parents.", "answer": "desperately", "explanation": "Desperately means urgently and anxiously."}, {"prompt": "We _____ the beautiful sunset before leaving the beach.", "answer": "savoured", "explanation": "Savoured means enjoyed fully."}, {"prompt": "The picnic was held beneath an _____.", "answer": "arbour", "explanation": "An arbour is a shaded garden shelter."}, {"prompt": "The sofa was _____ with a colourful blanket.", "answer": "draped", "explanation": "Draped means loosely covered."}, {"prompt": "I was _____ by the difficult puzzle.", "answer": "perplexed", "explanation": "Perplexed means confused."}, {"prompt": "The suspect replied _____ during the police interview.", "answer": "guardedly", "explanation": "Guardedly means cautiously."}, {"prompt": "Cyclists should be _____ vehicles when crossing junctions.", "answer": "wary of", "explanation": "Wary of means cautious about."}, {"prompt": "The patient experienced _____ pain after the accident.", "answer": "acute", "explanation": "Acute means severe or intense."}, {"prompt": "The silver necklace will _____ her elegant evening gown.", "answer": "complement", "explanation": "Complement means match well with."}]}, {"id": "mcq3", "title": "Quiz 5: Meaning in Context", "type": "mcq", "description": "Choose the option that best explains the highlighted word.", "questions": [{"prompt": "The speaker gave such a <strong>compelling</strong> argument that everyone agreed.", "options": ["boring", "persuasive", "confusing", "dishonest"], "answer": 1, "explanation": "Compelling means very convincing or persuasive."}, {"prompt": "The knight <strong>wielded</strong> his sword confidently.", "options": ["carried and used skilfully", "repaired", "sold", "hid"], "answer": 0, "explanation": "Wielded means held and used a weapon or tool effectively."}, {"prompt": "During the interview, James <strong>floundered</strong> when asked about his experience.", "options": ["answered confidently", "struggled awkwardly", "laughed", "remained silent"], "answer": 1, "explanation": "Floundered means struggled to act or speak effectively."}, {"prompt": "Police managed to <strong>subdue</strong> the violent suspect.", "options": ["encourage", "bring under control", "release", "reward"], "answer": 1, "explanation": "Subdue means overcome and bring under control."}, {"prompt": "Amy is so <strong>fickle</strong> that she changes hobbies every month.", "options": ["loyal", "determined", "quick to change", "patient"], "answer": 2, "explanation": "Fickle means changing frequently and unpredictably."}, {"prompt": "Everyone <strong>pitched in</strong> to clean the classroom.", "options": ["complained", "helped", "argued", "rested"], "answer": 1, "explanation": "Pitch in means contribute or help with a shared task."}, {"prompt": "The baby's <strong>incessant</strong> crying kept everyone awake.", "options": ["occasional", "continuous", "cheerful", "soft"], "answer": 1, "explanation": "Incessant means continuing without interruption."}, {"prompt": "Dark clouds gave the sky an <strong>ominous</strong> appearance.", "options": ["peaceful", "suggesting danger", "colourful", "beautiful"], "answer": 1, "explanation": "Ominous means suggesting that something bad may happen."}, {"prompt": "I am <strong>sceptical</strong> that the rumour is true.", "options": ["doubtful", "certain", "proud", "curious"], "answer": 0, "explanation": "Sceptical means doubtful or unconvinced."}, {"prompt": "The desert was <strong>devoid</strong> of life.", "options": ["surrounded by", "completely lacking", "full of", "protected by"], "answer": 1, "explanation": "Devoid of means entirely without."}, {"prompt": "It is wrong to <strong>ridicule</strong> someone for making a mistake.", "options": ["praise", "copy", "mock", "comfort"], "answer": 2, "explanation": "Ridicule means mock or make fun of."}, {"prompt": "His <strong>wavering</strong> voice suggested he was nervous.", "options": ["confident", "uncertain", "loud", "cheerful"], "answer": 1, "explanation": "Wavering means unsteady or uncertain."}, {"prompt": "“You won the lottery?” she asked <strong>incredulously</strong>.", "options": ["happily", "angrily", "in disbelief", "quietly"], "answer": 2, "explanation": "Incredulously means in a disbelieving manner."}, {"prompt": "<strong>Gullible</strong> people may believe obvious online scams.", "options": ["suspicious", "easily deceived", "intelligent", "generous"], "answer": 1, "explanation": "Gullible means easily tricked or persuaded."}, {"prompt": "No human is <strong>infallible</strong>.", "options": ["incapable of making mistakes", "always honest", "very wealthy", "hardworking"], "answer": 0, "explanation": "Infallible means incapable of making mistakes."}]}, {"id": "fill3", "title": "Quiz 6: Fill in the Blanks", "type": "fill", "description": "Type the most suitable word or phrase.", "wordBank": ["compelling", "wielded", "floundered", "subdue", "fickle", "pitch in", "incessant", "ominous", "sceptical", "devoid", "ridicule", "wavering", "incredulously", "gullible", "infallible"], "questions": [{"prompt": "The lawyer presented a _____ argument.", "answer": "compelling", "explanation": "Compelling means highly persuasive."}, {"prompt": "The firefighter _____ an axe to break down the door.", "answer": "wielded", "explanation": "Wielded means held and used skilfully."}, {"prompt": "Without preparation, she _____ during her presentation.", "answer": "floundered", "explanation": "Floundered means struggled awkwardly."}, {"prompt": "Officers managed to _____ the angry crowd.", "answer": "subdue", "explanation": "Subdue means bring under control."}, {"prompt": "He is so _____ that his favourite football club changes every season.", "answer": "fickle", "explanation": "Fickle means frequently changing."}, {"prompt": "Everyone agreed to _____ and help with the charity event.", "answer": "pitch in", "explanation": "Pitch in means help with a shared task."}, {"prompt": "The _____ noise from the construction site became unbearable.", "answer": "incessant", "explanation": "Incessant means continuous."}, {"prompt": "The _____ silence before the announcement worried everyone.", "answer": "ominous", "explanation": "Ominous suggests danger or trouble."}, {"prompt": "Many scientists remain _____ of extraordinary claims without evidence.", "answer": "sceptical", "explanation": "Sceptical means doubtful."}, {"prompt": "The old building was _____ of furniture.", "answer": "devoid", "explanation": "Devoid of means completely lacking."}, {"prompt": "Nobody should _____ others because of their appearance.", "answer": "ridicule", "explanation": "Ridicule means mock."}, {"prompt": "His _____ reply suggested he was unsure.", "answer": "wavering", "explanation": "Wavering means uncertain or unsteady."}, {"prompt": "The audience stared _____ when the magician disappeared.", "answer": "incredulously", "explanation": "Incredulously means with disbelief."}, {"prompt": "Only a _____ person would believe such an obvious scam.", "answer": "gullible", "explanation": "Gullible means easily deceived."}, {"prompt": "Even experienced doctors are not _____.", "answer": "infallible", "explanation": "Infallible means incapable of error."}]}, {"id": "mcq4", "title": "Quiz 7: Meaning in Context", "type": "mcq", "description": "Choose the option that best explains the highlighted word.", "questions": [{"prompt": "The villagers <strong>rebelled</strong> against the unjust ruler.", "options": ["obeyed", "actively resisted", "praised", "ignored"], "answer": 1, "explanation": "Rebelled means actively resisted authority or control."}, {"prompt": "I <strong>shuddered</strong> when I heard the scratching sound outside.", "options": ["laughed loudly", "shook suddenly", "fell asleep", "spoke softly"], "answer": 1, "explanation": "Shuddered means shook suddenly, often from fear, cold or disgust."}, {"prompt": "She began to <strong>resent</strong> being given all the unpleasant tasks.", "options": ["feel bitter about", "enjoy", "forget", "understand"], "answer": 0, "explanation": "Resent means feel bitterness or anger because something seems unfair."}, {"prompt": "The teacher's quiet <strong>reproach</strong> made him realise that his behaviour was unacceptable.", "options": ["praise", "expression of disappointment", "joke", "permission"], "answer": 1, "explanation": "Reproach is an expression of disappointment or disapproval."}, {"prompt": "The coach's speech greatly improved the team's <strong>morale</strong>.", "options": ["physical strength", "confidence and enthusiasm", "uniform", "strategy"], "answer": 1, "explanation": "Morale is the confidence, enthusiasm and spirit of a group."}, {"prompt": "The older student <strong>instigated</strong> the argument.", "options": ["ended", "caused to begin", "ignored", "reported"], "answer": 1, "explanation": "Instigated means caused or encouraged something to begin."}, {"prompt": "A single spark <strong>ignited</strong> the dry grass.", "options": ["wet", "set on fire", "covered", "removed"], "answer": 1, "explanation": "Ignited means caused to catch fire."}, {"prompt": "After months of disagreement, the sisters finally <strong>reconciled</strong>.", "options": ["became friendly again", "moved away", "argued further", "forgot each other"], "answer": 0, "explanation": "Reconciled means restored friendly relations."}, {"prompt": "The injured deer remained <strong>immobile</strong> beside the road.", "options": ["unable to move", "very noisy", "dangerous", "well hidden"], "answer": 0, "explanation": "Immobile means unable or unwilling to move."}, {"prompt": "Despite the setback, she remained <strong>optimistic</strong>.", "options": ["hopeful about the future", "angry", "uncertain", "careless"], "answer": 0, "explanation": "Optimistic means expecting a positive outcome."}, {"prompt": "He was <strong>pessimistic</strong> about the team's chances of winning.", "options": ["overconfident", "expecting a bad outcome", "excited", "uninterested"], "answer": 1, "explanation": "Pessimistic means expecting the worst or focusing on negative outcomes."}, {"prompt": "The smell from the overflowing rubbish bin was <strong>repulsive</strong>.", "options": ["pleasant", "extremely unpleasant", "faint", "unusual but attractive"], "answer": 1, "explanation": "Repulsive means causing strong dislike or disgust."}, {"prompt": "The captain <strong>relinquished</strong> command of the ship.", "options": ["gave up", "strengthened", "forgot", "requested"], "answer": 0, "explanation": "Relinquished means voluntarily gave up control or possession."}, {"prompt": "The scandal caused widespread <strong>disillusionment</strong> among supporters.", "options": ["loss of faith", "celebration", "confusion about directions", "increased loyalty"], "answer": 0, "explanation": "Disillusionment is disappointment caused by discovering that something is not as good as believed."}, {"prompt": "The sociologist studied how family structures influence behaviour. A <strong>sociologist</strong> is someone who studies _____.", "options": ["weather", "society and social behaviour", "diseases", "language sounds"], "answer": 1, "explanation": "A sociologist studies society, groups, cultures and social behaviour."}]}, {"id": "fill4", "title": "Quiz 8: Fill in the Blanks", "type": "fill", "description": "Type the most suitable word.", "wordBank": ["rebelled", "shuddered", "resent", "reproach", "morale", "instigated", "ignited", "reconciled", "immobile", "optimistic", "pessimistic", "repulsive", "relinquished", "disillusionment", "sociologist"], "questions": [{"prompt": "The citizens _____ against the unfair law.", "answer": "rebelled", "explanation": "Rebelled means actively resisted authority."}, {"prompt": "I _____ when I saw the enormous spider.", "answer": "shuddered", "explanation": "Shuddered means shook suddenly."}, {"prompt": "Many employees began to _____ the unfair workload.", "answer": "resent", "explanation": "Resent means feel bitter about unfair treatment."}, {"prompt": "His mother's gentle _____ made him reflect on his dishonesty.", "answer": "reproach", "explanation": "Reproach means an expression of disappointment or disapproval."}, {"prompt": "Winning the championship greatly improved team _____.", "answer": "morale", "explanation": "Morale is confidence and enthusiasm."}, {"prompt": "The older boy _____ the fight by insulting both groups.", "answer": "instigated", "explanation": "Instigated means caused something to begin."}, {"prompt": "The dry leaves were _____ by a small spark.", "answer": "ignited", "explanation": "Ignited means set on fire."}, {"prompt": "The sisters finally _____ after months of not speaking.", "answer": "reconciled", "explanation": "Reconciled means became friendly again."}, {"prompt": "The patient remained _____ after the operation.", "answer": "immobile", "explanation": "Immobile means unable to move."}, {"prompt": "She stayed _____ even after several failed attempts.", "answer": "optimistic", "explanation": "Optimistic means hopeful."}, {"prompt": "His _____ attitude discouraged the rest of the team.", "answer": "pessimistic", "explanation": "Pessimistic means expecting a negative outcome."}, {"prompt": "The rotten food gave off a _____ smell.", "answer": "repulsive", "explanation": "Repulsive means extremely unpleasant."}, {"prompt": "The king _____ control of the kingdom to his daughter.", "answer": "relinquished", "explanation": "Relinquished means gave up."}, {"prompt": "Many supporters felt deep _____ after the scandal.", "answer": "disillusionment", "explanation": "Disillusionment is a loss of faith in something once admired."}, {"prompt": "A _____ may investigate how social class affects educational outcomes.", "answer": "sociologist", "explanation": "A sociologist studies society and social behaviour."}]}, {"id": "mcq5", "title": "Quiz 9: Final Meaning Challenge", "type": "mcq", "description": "Choose the best meaning based on the sentence.", "questions": [{"prompt": "A <strong>sentry</strong> stood at the gate throughout the night.", "options": ["guard", "merchant", "doctor", "messenger"], "answer": 0, "explanation": "A sentry is a guard stationed to watch for danger or unauthorised access."}, {"prompt": "The <strong>ventriloquist</strong> made it appear that the puppet was speaking.", "options": ["singer", "performer who projects a voice without moving the lips visibly", "magician who uses cards", "street dancer"], "answer": 1, "explanation": "A ventriloquist creates the illusion that a voice comes from elsewhere."}, {"prompt": "The shop's <strong>proprietor</strong> greeted every customer personally.", "options": ["owner", "security guard", "supplier", "new employee"], "answer": 0, "explanation": "A proprietor is the owner of a business or property."}, {"prompt": "A <strong>hindrance</strong> prevented the team from completing the task quickly.", "options": ["advantage", "obstacle", "reward", "instruction"], "answer": 1, "explanation": "A hindrance is something that obstructs or delays progress."}, {"prompt": "The fine acted as a <strong>deterrent</strong> against illegal parking.", "options": ["encouragement", "warning that discourages an action", "reward", "excuse"], "answer": 1, "explanation": "A deterrent discourages someone from doing something."}, {"prompt": "The restrictions were introduced to control access to the laboratory.", "options": ["limits or rules", "celebrations", "explanations", "gifts"], "answer": 0, "explanation": "Restrictions are rules or limits that control what is allowed."}, {"prompt": "The safety belt kept the passenger under <strong>restraint</strong>.", "options": ["control", "observation", "pressure to speak", "protection from sunlight"], "answer": 0, "explanation": "Restraint means control or limitation of movement or behaviour."}, {"prompt": "The medicine helped <strong>allay</strong> her fears before the operation.", "options": ["increase", "reduce or calm", "hide", "explain"], "answer": 1, "explanation": "Allay means reduce or relieve a negative feeling."}, {"prompt": "The parent tried to <strong>pacify</strong> the crying child.", "options": ["calm", "punish", "ignore", "wake"], "answer": 0, "explanation": "Pacify means calm or soothe someone who is upset."}, {"prompt": "The good news helped <strong>relieve</strong> his worries.", "options": ["increase", "ease", "confirm", "describe"], "answer": 1, "explanation": "Relieve means reduce pain, distress or worry."}, {"prompt": "The officers managed to <strong>subdue</strong> the disturbance.", "options": ["bring under control", "announce", "avoid", "investigate"], "answer": 0, "explanation": "Subdue means overcome or bring under control."}, {"prompt": "The loud music was <strong>incessant</strong>, continuing for hours.", "options": ["intermittent", "unending", "pleasant", "faint"], "answer": 1, "explanation": "Incessant means continuing without stopping."}, {"prompt": "She <strong>loathed</strong> dishonesty.", "options": ["admired", "strongly hated", "tolerated", "failed to notice"], "answer": 1, "explanation": "Loathe means feel intense dislike or disgust."}, {"prompt": "The crowd gave a <strong>raucous</strong> cheer.", "options": ["very loud and noisy", "gentle", "brief and silent", "formal"], "answer": 0, "explanation": "Raucous means loud, harsh and noisy."}, {"prompt": "The witness spoke <strong>guardedly</strong> because she did not want to reveal too much.", "options": ["carelessly", "cautiously", "enthusiastically", "dishonestly"], "answer": 1, "explanation": "Guardedly means cautiously and with restraint."}]}, {"id": "story1", "title": "Quiz 10: The Abandoned Theatre", "type": "story", "description": "Complete the story using each word from the jumbled word bank once.", "wordBank": ["candour", "raucous", "defunct", "incognito", "aggravate", "facets", "sanctuary", "abdicate", "bizarre", "elapsed", "feud", "emanated", "immersed", "abhor", "caprice"], "storyTitle": "The Abandoned Theatre", "questions": [{"prompt": "For twenty years, the old Imperial Theatre had been _____, its doors locked and its stage covered in dust.", "answer": "defunct", "explanation": "Defunct means no longer operating."}, {"prompt": "Sofia had always been _____ in stories about forgotten places, so she persuaded her cousin Ming to explore it with her.", "answer": "immersed", "explanation": "Immersed means deeply involved or absorbed."}, {"prompt": "They entered _____, wearing plain clothes so that nobody nearby would recognise them.", "answer": "incognito", "explanation": "Incognito means with one's identity concealed."}, {"prompt": "A faint smell of smoke _____ from behind the curtains.", "answer": "emanated", "explanation": "Emanated means spread out from a source."}, {"prompt": "Ming found the smell _____ because there was no electricity in the building.", "answer": "bizarre", "explanation": "Bizarre means very strange or unusual."}, {"prompt": "Only ten minutes had _____ when they heard a _____ burst of laughter from the balcony.", "answer": "elapsed", "explanation": "Elapsed means passed, especially of time."}, {"prompt": "The laughter was so _____ that it echoed through the empty hall.", "answer": "raucous", "explanation": "Raucous means very loud and noisy."}, {"prompt": "They discovered an elderly caretaker who had used the theatre as a private _____ from the busy city.", "answer": "sanctuary", "explanation": "A sanctuary is a safe or peaceful refuge."}, {"prompt": "With surprising _____, he admitted that he had secretly lived there for years.", "answer": "candour", "explanation": "Candour means honesty and openness."}, {"prompt": "He explained that a bitter family _____ had prevented the theatre's owners from repairing it.", "answer": "feud", "explanation": "A feud is a prolonged bitter quarrel."}, {"prompt": "One owner had even threatened to _____ his position rather than cooperate with his brother.", "answer": "abdicate", "explanation": "Abdicate means formally give up a position of power."}, {"prompt": "Sofia could not understand such a sudden _____, because the theatre had once been valuable.", "answer": "caprice", "explanation": "Caprice is a sudden and unpredictable change of mind or behaviour."}, {"prompt": "She said she _____ the selfishness that had allowed a beautiful building to decay.", "answer": "abhor", "explanation": "Abhor means hate strongly."}, {"prompt": "The caretaker warned that careless exploration could _____ the damaged floorboards.", "answer": "aggravate", "explanation": "Aggravate means make a problem worse."}, {"prompt": "As they left, Sofia realised that the mystery had many _____: family pride, money, memory and fear.", "answer": "facets", "explanation": "Facets are different aspects or sides of something."}], "storyTemplate": "For twenty years, the old Imperial Theatre had been {{0}}, its grand entrance hidden behind rusted gates and creeping vines. Most people in the neighbourhood had forgotten what it looked like inside, but Sofia had always been {{1}} in stories about abandoned places. One Saturday afternoon, she persuaded her cousin Ming to explore it with her. They decided to enter {{2}}, wearing plain clothes and avoiding the main road so that no one nearby would recognise them. The moment they stepped into the lobby, a faint smell of smoke {{3}} from somewhere behind the stage curtains. Ming stopped immediately. There was no electricity in the building, so the smell seemed especially {{4}}. They moved slowly through the dusty hall. Only ten minutes had {{5}} when a burst of laughter came from the balcony. It was so {{6}} that it echoed through the empty theatre and made both of them freeze. After gathering their courage, they climbed the narrow staircase and discovered an elderly caretaker sitting beside a small lamp. The man explained that he had turned one corner of the theatre into a private {{7}}, away from the noise and pressure of the city. With surprising {{8}}, he admitted that he had been living there quietly for several years. He then told them that a bitter family {{9}} had prevented the owners from repairing the building. One brother had even threatened to {{10}} his position in the family company rather than cooperate. Sofia could not understand such a sudden {{11}}, especially when the theatre had once been one of the most valuable buildings in the area. She said she {{12}} the selfishness that had allowed a place of such beauty to decay. The caretaker warned them that careless movement could {{13}} the damage to the floorboards, so they followed him carefully towards the exit. As they left, Sofia realised that the mystery had many {{14}}. It was not simply a story about an abandoned theatre, but also one about pride, money, memory and fear."}, {"id": "story2", "title": "Quiz 11: The Mountain Rescue", "type": "story", "description": "Complete the story using each word or phrase from the jumbled word bank once.", "wordBank": ["guardedly", "supplement", "acute", "draped", "hysterically", "perplexed", "wary of", "arbour", "savoured", "impede", "heatedly", "strenuous", "desperately", "complement", "agitate"], "storyTitle": "The Mountain Rescue", "questions": [{"prompt": "The school's hiking team had trained for weeks because the climb would be extremely _____.", "answer": "strenuous", "explanation": "Strenuous means requiring great effort."}, {"prompt": "Their teacher reminded them to _____ their water supply with energy drinks and fruit.", "answer": "supplement", "explanation": "Supplement means add something extra to improve or increase it."}, {"prompt": "At the base camp, a green canvas was _____ over a wooden _____ to create shade.", "answer": "draped", "explanation": "Draped means loosely covered with cloth."}, {"prompt": "The wooden _____ stood beside the trail and provided shelter from the sun.", "answer": "arbour", "explanation": "An arbour is a shaded garden or outdoor shelter."}, {"prompt": "Before leaving, the hikers _____ their breakfast instead of eating too quickly.", "answer": "savoured", "explanation": "Savoured means enjoyed slowly and fully."}, {"prompt": "Halfway up, thick fog began to _____ their progress.", "answer": "impede", "explanation": "Impede means obstruct or slow down."}, {"prompt": "The group became _____ when one sign appeared to point in two directions.", "answer": "perplexed", "explanation": "Perplexed means confused."}, {"prompt": "Two students argued _____ about which path to take.", "answer": "heatedly", "explanation": "Heatedly means angrily or intensely."}, {"prompt": "Their teacher told them not to _____ one another, as panic would make the situation worse.", "answer": "agitate", "explanation": "Agitate means disturb or upset."}, {"prompt": "They moved _____ along the ridge because the rocks were slippery.", "answer": "guardedly", "explanation": "Guardedly means cautiously."}, {"prompt": "They were also _____ loose stones that could fall from above.", "answer": "wary of", "explanation": "Wary of means cautious about possible danger."}, {"prompt": "Suddenly, a student screamed _____ when she saw her friend slip.", "answer": "hysterically", "explanation": "Hysterically means with uncontrolled emotion."}, {"prompt": "The injured hiker suffered _____ pain in his ankle.", "answer": "acute", "explanation": "Acute means severe or intense."}, {"prompt": "The others searched _____ for a phone signal.", "answer": "desperately", "explanation": "Desperately means with great urgency and anxiety."}, {"prompt": "When the rescue helicopter arrived, its bright markings seemed to _____ the red emergency jackets worn by the team.", "answer": "complement", "explanation": "Complement means match well with or enhance."}], "storyTemplate": "The school's hiking team had trained for several weeks because the climb to Eagle Ridge would be extremely {{0}}. Their teacher reminded them that endurance alone would not be enough. They also needed to {{1}} their water supply with fruit, energy bars and electrolyte drinks. At the base camp, a green canvas had been {{2}} over a wooden {{3}} to create a shaded resting area. The hikers sat beneath it and {{4}} their breakfast instead of rushing through the meal. Everyone was excited, but their teacher reminded them that weather conditions in the mountains could change quickly. For the first hour, the trail was clear. Then thick fog began to {{5}} their progress, and the group had to slow down. At a fork in the path, they became {{6}} because one sign appeared to point in two directions. Two students argued {{7}} about which route they should take, but their teacher told them not to {{8}} one another. The team continued {{9}} along a narrow ridge. They were especially {{10}} loose stones that could fall from above. A few minutes later, one student screamed {{11}} when she saw her friend slip and land awkwardly. The injured hiker felt an {{12}} pain in his ankle and could not stand. The others searched {{13}} for a phone signal, moving only a few metres at a time so that they would not lose sight of one another. At last, the rescue helicopter appeared through the fog. Its bright markings seemed to {{14}} the red emergency jackets worn by the team. The rescue ended safely, but the experience taught the students that preparation, calm thinking and teamwork mattered as much as physical strength."}, {"id": "story3", "title": "Quiz 12: The Debate Competition", "type": "story", "description": "Complete the story using each word or phrase from the jumbled word bank once.", "wordBank": ["devoid", "pitch in", "wavering", "gullible", "wielded", "floundered", "sceptical", "ominous", "compelling", "incredulously", "subdue", "fickle", "ridicule", "incessant", "infallible"], "storyTitle": "The Debate Competition", "questions": [{"prompt": "Aisha's class had to _____ to prepare the hall for the inter-school debate.", "answer": "pitch in", "explanation": "Pitch in means help with a shared task."}, {"prompt": "Outside, the sky looked _____, and thunder could be heard in the distance.", "answer": "ominous", "explanation": "Ominous means suggesting that something bad may happen."}, {"prompt": "Inside, the microphone produced an _____ buzzing sound.", "answer": "incessant", "explanation": "Incessant means continuing without stopping."}, {"prompt": "The first speaker _____ her notes confidently as though they were a powerful weapon.", "answer": "wielded", "explanation": "Wielded means held and used effectively."}, {"prompt": "Her opening argument was so _____ that the judges immediately paid attention.", "answer": "compelling", "explanation": "Compelling means highly persuasive."}, {"prompt": "However, her opponent appeared _____ of her statistics and demanded evidence.", "answer": "sceptical", "explanation": "Sceptical means doubtful or unconvinced."}, {"prompt": "When asked for the source, she _____ and struggled to explain.", "answer": "floundered", "explanation": "Floundered means struggled awkwardly."}, {"prompt": "One audience member stared _____ when she claimed that every website was trustworthy.", "answer": "incredulously", "explanation": "Incredulously means in disbelief."}, {"prompt": "Only a very _____ person would accept such a claim without checking it.", "answer": "gullible", "explanation": "Gullible means easily deceived."}, {"prompt": "The judge reminded the audience not to _____ a speaker for making a mistake.", "answer": "ridicule", "explanation": "Ridicule means mock or make fun of."}, {"prompt": "The speaker's once-confident voice became _____ as she continued.", "answer": "wavering", "explanation": "Wavering means unsteady or uncertain."}, {"prompt": "Her final paragraph was _____ of clear examples.", "answer": "devoid", "explanation": "Devoid of means completely lacking."}, {"prompt": "The chairperson stepped in to _____ the growing argument between the teams.", "answer": "subdue", "explanation": "Subdue means bring under control."}, {"prompt": "The judges warned that public opinion can be _____ and may change rapidly.", "answer": "fickle", "explanation": "Fickle means changing frequently and unpredictably."}, {"prompt": "They also reminded students that no speaker is _____; everyone can make errors.", "answer": "infallible", "explanation": "Infallible means incapable of making mistakes."}], "storyTemplate": "Aisha's class had volunteered to host the inter-school debate competition, so everyone had to {{0}} and help prepare the hall. By late afternoon, rows of chairs had been arranged and the stage lights were ready. Outside, however, the sky looked {{1}}, and thunder rolled in the distance. Just before the competition began, the microphone produced an {{2}} buzzing sound. A technician rushed over to fix it while the audience waited. When the first speaker finally stepped forward, she {{3}} her notes confidently as though they were a powerful weapon. Her opening argument was so {{4}} that the judges immediately paid attention. However, her opponent appeared {{5}} of several statistics and asked where they had come from. The speaker hesitated. When pressed for evidence, she {{6}} and struggled to explain her source. One audience member stared {{7}} when she claimed that every website could be trusted. The judge pointed out that only a very {{8}} person would accept such a statement without checking it carefully. He also reminded the audience not to {{9}} a speaker for making a mistake, since debate was meant to develop courage and clear thinking. The speaker's voice became {{10}} as she continued. Her final paragraph was {{11}} of strong examples, and the opposing team began to argue loudly. The chairperson stepped in to {{12}} the tension before it became disruptive. After the competition, the judges explained that public opinion can be {{13}} and may change quickly. They also reminded the students that no speaker is {{14}}. Even confident people can make errors, and the best response is to learn from them."}, {"id": "story4", "title": "Quiz 13: The Broken Friendship", "type": "story", "description": "Complete the story using each word from the jumbled word bank once.", "wordBank": ["pessimistic", "reproach", "reconciled", "relinquished", "repulsive", "instigated", "optimistic", "morale", "shuddered", "sociologist", "resent", "immobile", "rebelled", "ignited", "disillusionment"], "storyTitle": "The Broken Friendship", "questions": [{"prompt": "During a school camp, a careless rumour _____ a serious quarrel between two close friends.", "answer": "instigated", "explanation": "Instigated means caused something to begin."}, {"prompt": "The rumour _____ anger throughout the class.", "answer": "ignited", "explanation": "Ignited can mean caused a strong reaction to begin."}, {"prompt": "Some students even _____ against the class leaders when they tried to restore order.", "answer": "rebelled", "explanation": "Rebelled means actively resisted authority."}, {"prompt": "Mei Lin began to _____ her friend for believing the rumour.", "answer": "resent", "explanation": "Resent means feel bitter about unfair treatment."}, {"prompt": "Her friend's harsh message was so unpleasant that the student found it almost _____.", "answer": "repulsive", "explanation": "Repulsive means extremely unpleasant or disgusting."}, {"prompt": "She _____ when she read it again the next morning.", "answer": "shuddered", "explanation": "Shuddered means shook suddenly from fear, cold or disgust."}, {"prompt": "For several days, both girls remained emotionally _____ and refused to speak.", "answer": "immobile", "explanation": "Immobile literally means unable or unwilling to move; here it suggests being stuck and inactive."}, {"prompt": "Their form teacher offered a gentle _____ rather than shouting at them.", "answer": "reproach", "explanation": "Reproach is an expression of disappointment or disapproval."}, {"prompt": "She explained that poor communication could damage class _____.", "answer": "morale", "explanation": "Morale is the confidence and spirit of a group."}, {"prompt": "One girl was _____ and believed their friendship could never recover.", "answer": "pessimistic", "explanation": "Pessimistic means expecting a negative outcome."}, {"prompt": "The other remained _____ and suggested a calm conversation.", "answer": "optimistic", "explanation": "Optimistic means hopeful about the future."}, {"prompt": "Eventually, both girls _____ their pride and agreed to listen.", "answer": "relinquished", "explanation": "Relinquished means gave up control or possession."}, {"prompt": "They finally _____ after discovering that the rumour was false.", "answer": "reconciled", "explanation": "Reconciled means restored friendly relations."}, {"prompt": "Their earlier anger turned into _____ when they realised how easily they had been misled.", "answer": "disillusionment", "explanation": "Disillusionment is disappointment caused by discovering the truth."}, {"prompt": "A visiting _____ later used the incident to explain how rumours influence group behaviour.", "answer": "sociologist", "explanation": "A sociologist studies society and social behaviour."}], "storyTemplate": "During a school camp, a careless rumour {{0}} a serious quarrel between two close friends. Within hours, it had {{1}} anger throughout the class. Some students even {{2}} against the class leaders when they tried to restore order. Mei Lin began to {{3}} her friend for believing the rumour without asking her about it. Then she received a harsh message that she found almost {{4}}. When she read it again the next morning, she {{5}} and quickly put her phone away. For several days, both girls remained emotionally {{6}}. They avoided one another during meals, group activities and even the journey home. Their form teacher noticed the tension and offered a gentle {{7}} rather than shouting at them. She explained that unresolved conflict could damage class {{8}} and make everyone feel uncomfortable. One girl was deeply {{9}} and believed their friendship could never recover. The other remained {{10}} and suggested that they speak privately after school. At first, neither wanted to apologise, but eventually both {{11}} their pride and agreed to listen. They finally {{12}} after discovering that the rumour had been false. Their earlier anger turned into {{13}} when they realised how easily they had been misled. A visiting {{14}} later used the incident to explain how rumours can spread through a group and influence behaviour. The friendship did not return to normal immediately, but both girls became more careful about checking facts before reacting."}, {"id": "story5", "title": "Quiz 14: The Museum Incident", "type": "story", "description": "Complete the story using each word from the jumbled word bank once.", "wordBank": ["restrictions", "sentry", "loathed", "allay", "proprietor", "deterrent", "raucous", "hindrance", "subdue", "ventriloquist", "guardedly", "relieve", "pacify", "restraint", "incessant"], "storyTitle": "The Museum Incident", "questions": [{"prompt": "The museum's _____ had introduced strict _____ after several valuable objects were damaged.", "answer": "proprietor", "explanation": "A proprietor is the owner of a business or property."}, {"prompt": "The new _____ limited the number of visitors entering each gallery.", "answer": "restrictions", "explanation": "Restrictions are rules or limits."}, {"prompt": "A uniformed _____ stood beside the entrance throughout the day.", "answer": "sentry", "explanation": "A sentry is a guard stationed to watch an area."}, {"prompt": "The visible security cameras acted as a _____ against theft.", "answer": "deterrent", "explanation": "A deterrent discourages an unwanted action."}, {"prompt": "At first, the long queue seemed like a major _____ to Daniel's visit.", "answer": "hindrance", "explanation": "A hindrance is an obstacle or delay."}, {"prompt": "Inside, an _____ alarm suddenly began ringing.", "answer": "incessant", "explanation": "Incessant means continuing without stopping."}, {"prompt": "A _____ performance nearby made it seem as though a wooden puppet was shouting.", "answer": "ventriloquist", "explanation": "A ventriloquist makes a voice appear to come from elsewhere."}, {"prompt": "The puppet's _____ voice caused several children to cover their ears.", "answer": "raucous", "explanation": "Raucous means very loud and harsh."}, {"prompt": "One child _____ the noise and began crying.", "answer": "loathed", "explanation": "Loathed means strongly hated."}, {"prompt": "His mother tried to _____ him with a toy.", "answer": "pacify", "explanation": "Pacify means calm or soothe."}, {"prompt": "A guide spoke softly to _____ the fears of the other visitors.", "answer": "allay", "explanation": "Allay means reduce or calm a negative feeling."}, {"prompt": "Security officers moved _____ towards the source of the alarm.", "answer": "guardedly", "explanation": "Guardedly means cautiously."}, {"prompt": "They had to show considerable _____ while guiding the crowd away from the display.", "answer": "restraint", "explanation": "Restraint means control over one's actions or emotions."}, {"prompt": "Eventually, they managed to _____ the confusion and restore order.", "answer": "subdue", "explanation": "Subdue means bring under control."}, {"prompt": "When the alarm stopped, the silence helped _____ everyone's anxiety.", "answer": "relieve", "explanation": "Relieve means reduce worry, pain or distress."}], "storyTemplate": "The museum's {{0}} had introduced strict {{1}} after several valuable objects were damaged during a busy holiday period. Only a limited number of visitors could enter each gallery at one time, and bags had to be checked at the entrance. A uniformed {{2}} stood beside the main door throughout the day. The visible security cameras also acted as a {{3}} against theft. At first, the long queue seemed like a major {{4}} to Daniel's visit, but once she entered, she understood why the rules were necessary. Inside the main hall, an {{5}} alarm suddenly began ringing. At the same time, a {{6}} performing nearby made it seem as though a wooden puppet was shouting. The puppet's {{7}} voice added to the confusion and caused several children to cover their ears. One child {{8}} the noise and began crying. His mother tried to {{9}} him with a toy, while a museum guide spoke softly to {{10}} the fears of the other visitors. Security officers moved {{11}} towards the source of the alarm. They showed considerable {{12}} while guiding the crowd away from a valuable display. After several tense minutes, they managed to {{13}} the confusion and restore order. When the alarm finally stopped, the sudden silence helped {{14}} everyone's anxiety. The alarm had been caused by a faulty sensor rather than an emergency, but the incident showed why calm instructions and clear safety procedures were so important."}];
+
+const safeStorage={
+  get(key,fallback){
+    try{
+      const value=window.localStorage.getItem(key);
+      return value===null?fallback:value;
+    }catch(e){
+      return fallback;
+    }
+  },
+  set(key,value){
+    try{
+      window.localStorage.setItem(key,value);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+};
+
+let state;
+try{
+  state=JSON.parse(safeStorage.get("vocabQuizState","{}"))||{};
+}catch(e){
+  state={};
+}
+
+if(!state.quizScores) state.quizScores = {};
+if(!state.wordStats) state.wordStats = {};
+if(!state.learnedWords) state.learnedWords = {};
+if(!Number.isFinite(state.stars)) state.stars = 0;
+// Migrate scores saved by the earlier version.
+quizzes.forEach(q=>{
+  if(state[q.id] && !state.quizScores[q.id]){
+    state.quizScores[q.id] = {
+      best: state[q.id].best ?? null,
+      last: state[q.id].last ?? null,
+      attempts: state[q.id].last === undefined ? [] : [state[q.id].last]
+    };
+  }
+});
+let currentQuiz = quizzes[0],sessionWordBank=[];
+let currentIndex = 0;
+let sessionAnswers = [];
+
+let soundEnabled=true;
+try{
+  soundEnabled=JSON.parse(safeStorage.get("vocabQuizSound","true"));
+}catch(e){
+  soundEnabled=true;
+}
+let audioContext = null;
+
+function getAudioContext(){
+  if(!audioContext){
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if(audioContext.state === "suspended") audioContext.resume();
+  return audioContext;
+}
+
+function playTone(frequency, duration, type="sine", delay=0, gainValue=0.12){
+  if(!soundEnabled) return;
+  const ctx = getAudioContext();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const start = ctx.currentTime + delay;
+  osc.type = type;
+  osc.frequency.setValueAtTime(frequency, start);
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(gainValue, start + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(start);
+  osc.stop(start + duration + 0.02);
+}
+
+function playCorrectSound(){
+  if(!soundEnabled) return;
+  try{
+    const ctx=getAudioContext();
+    const now=ctx.currentTime;
+    const master=ctx.createGain();
+    master.gain.setValueAtTime(0.0001,now);
+    master.gain.exponentialRampToValueAtTime(4.48,now+0.02);
+    master.gain.exponentialRampToValueAtTime(0.0001,now+1.18);
+    master.connect(ctx.destination);
+
+    // Bright, game-like victory fanfare at the same master volume as the wrong-answer sound.
+    const notes=[
+      {f:523.25,t:0.00,d:0.18,type:"square",v:0.40},
+      {f:659.25,t:0.14,d:0.20,type:"triangle",v:0.44},
+      {f:783.99,t:0.29,d:0.22,type:"square",v:0.46},
+      {f:1046.50,t:0.46,d:0.46,type:"triangle",v:0.50}
+    ];
+    notes.forEach(({f,t,d,type,v})=>{
+      const osc=ctx.createOscillator();
+      const gain=ctx.createGain();
+      osc.type=type;
+      osc.frequency.setValueAtTime(f,now+t);
+      gain.gain.setValueAtTime(0.0001,now+t);
+      gain.gain.exponentialRampToValueAtTime(v,now+t+0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+t+d);
+      osc.connect(gain);
+      gain.connect(master);
+      osc.start(now+t);
+      osc.stop(now+t+d+0.04);
+    });
+
+    // A short high sparkle reinforces the successful-answer cue.
+    const sparkle=ctx.createOscillator();
+    const sparkleGain=ctx.createGain();
+    sparkle.type="sine";
+    sparkle.frequency.setValueAtTime(1318.51,now+0.62);
+    sparkleGain.gain.setValueAtTime(0.0001,now+0.62);
+    sparkleGain.gain.exponentialRampToValueAtTime(0.34,now+0.64);
+    sparkleGain.gain.exponentialRampToValueAtTime(0.0001,now+0.98);
+    sparkle.connect(sparkleGain);
+    sparkleGain.connect(master);
+    sparkle.start(now+0.62);
+    sparkle.stop(now+1.00);
+
+    if(navigator.vibrate) navigator.vibrate([30,25,55]);
+  }catch(e){}
+}
+
+function playWrongSound(){
+  if(!soundEnabled) return;
+  try{
+    const ctx=getAudioContext();
+    const now=ctx.currentTime;
+    const master=ctx.createGain();
+    master.gain.setValueAtTime(0.0001,now);
+    master.gain.exponentialRampToValueAtTime(4.48,now+0.02);
+    master.gain.exponentialRampToValueAtTime(0.0001,now+0.96);
+    master.connect(ctx.destination);
+
+    const notes=[
+      {f:440.00,t:0.00,d:0.23,v:0.36},
+      {f:349.23,t:0.20,d:0.25,v:0.38},
+      {f:293.66,t:0.43,d:0.34,v:0.40}
+    ];
+    notes.forEach(({f,t,d,v})=>{
+      const osc=ctx.createOscillator();
+      const gain=ctx.createGain();
+      osc.type="triangle";
+      osc.frequency.setValueAtTime(f,now+t);
+      gain.gain.setValueAtTime(0.0001,now+t);
+      gain.gain.exponentialRampToValueAtTime(v,now+t+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+t+d);
+      osc.connect(gain);
+      gain.connect(master);
+      osc.start(now+t);
+      osc.stop(now+t+d+0.04);
+    });
+    if(navigator.vibrate) navigator.vibrate([55,35,55]);
+  }catch(e){}
+}
+
+function updateSoundButton(){
+  const btn = document.getElementById("soundToggle");
+  if(!btn) return;
+  btn.textContent = soundEnabled ? "🔊 Sound: On" : "🔇 Sound: Off";
+  btn.setAttribute("aria-pressed", String(soundEnabled));
+}
+
+function normalise(s){return (s||"").trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g," ")}
+function save(){safeStorage.set("vocabQuizState",JSON.stringify(state))}
+function quizBest(id){return state.quizScores[id]?.best ?? null}
+
+function stripHtml(text){
+  const div=document.createElement("div");
+  div.innerHTML=text;
+  return div.textContent || div.innerText || "";
+}
+
+function questionWord(quiz, question){
+  if(quiz.type==="fill" || quiz.type==="story") return normalise(question.answer);
+  const match=question.prompt.match(/<strong>(.*?)<\/strong>/i);
+  if(match) return normalise(stripHtml(match[1]));
+  return normalise(question.options[question.answer]);
+}
+
+function allVocabularyWords(){
+  const words=new Set();
+  quizzes.forEach(quiz=>quiz.questions.forEach(q=>words.add(questionWord(quiz,q))));
+  return [...words].sort();
+}
+
+function wordStatus(word){
+  const stat=state.wordStats[word] || {correct:0,attempts:0};
+  const accuracy=stat.attempts ? stat.correct/stat.attempts : 0;
+
+  // Mastered requires consistent success across at least two encounters.
+  if(stat.attempts>=2 && accuracy>=0.8) return "mastered";
+
+  // Almost mastered gives visible recognition for strong progress, even before full mastery.
+  if(stat.attempts>=1 && accuracy>=0.7) return "almost";
+
+  // Any attempted word below the almost-mastered threshold is still being learnt.
+  if(stat.attempts>=1) return "learning";
+
+  return "unlearnt";
+}
+
+function masterySummary(){
+  const words=allVocabularyWords();
+  let mastered=0, almost=0, learning=0, unlearnt=0;
+
+  words.forEach(word=>{
+    const status=wordStatus(word);
+    if(status==="mastered") mastered++;
+    else if(status==="almost") almost++;
+    else if(status==="learning") learning++;
+    else unlearnt++;
+  });
+
+  // Reward progress gradually: mastered 100%, almost mastered 75%, learning 40%.
+  const progress=words.length
+    ? Math.round(((mastered + almost*0.75 + learning*0.4)/words.length)*100)
+    : 0;
+
+  return {words,mastered,almost,learning,unlearnt,progress};
+}
+
+
+function encouragementText(stars){
+  if(stars===0) return "Every correct answer earns a star. Your learning journey starts here!";
+  if(stars<10) return "Great start! You are building your vocabulary one word at a time.";
+  if(stars<25) return "Wonderful effort! Your word power is growing.";
+  if(stars<50) return "You are on a roll! Keep collecting stars.";
+  if(stars<100) return "Amazing progress! You are becoming a vocabulary champion.";
+  return "Vocabulary superstar! Your steady effort is paying off.";
+}
+
+function addLearningStars(amount){
+  if(!amount || amount<1) return;
+  state.stars=(state.stars||0)+amount;
+  save();
+  const count=document.getElementById("starCount");
+  const card=document.getElementById("encouragementCard");
+  if(count) count.textContent=state.stars;
+  if(card){
+    card.classList.remove("star-pop");
+    void card.offsetWidth;
+    card.classList.add("star-pop");
+  }
+  const message=document.getElementById("encouragementMessage");
+  if(message) message.textContent=encouragementText(state.stars);
+}
+
+function renderSidebar(){
+  const select=document.getElementById("quizSelect");
+  const note=document.getElementById("quizSelectNote");
+  select.innerHTML="";
+  quizzes.forEach(q=>{
+    const option=document.createElement("option");
+    const best=quizBest(q.id);
+    const type=q.type==="mcq"?"Multiple choice":q.type==="story"?"Story cloze":"Fill in the blanks";
+    option.value=q.id;
+    option.textContent=`${q.title} — ${best===null?"Not completed":"Best: "+best+"%"}`;
+    option.selected=q.id===currentQuiz.id;
+    option.dataset.note=`${type} · ${best===null?"Not completed yet":"Best score: "+best+"%"}`;
+    select.appendChild(option);
+  });
+  const updateQuizNote=()=>{
+    const selected=select.options[select.selectedIndex];
+    if(note) note.textContent=selected?.dataset.note || "Select a quiz to begin.";
+  };
+  select.onchange=()=>{
+    if(select.value!==currentQuiz.id) startQuiz(select.value);
+    else updateQuizNote();
+  };
+  updateQuizNote();
+  const completed=quizzes.filter(q=>quizBest(q.id)!==null).length;
+  const summary=masterySummary();
+  document.getElementById("completedCount").textContent=`${completed} / ${quizzes.length}`;
+  document.getElementById("overallScore").textContent=summary.progress+"%";
+  document.getElementById("overallBar").style.width=summary.progress+"%";
+  document.getElementById("masteredCount").textContent=`${summary.mastered} / ${summary.words.length}`;
+  document.getElementById("almostCount").textContent=summary.almost;
+  document.getElementById("learningCount").textContent=summary.learning;
+  document.getElementById("unlearntCount").textContent=summary.unlearnt;
+  document.getElementById("starCount").textContent=state.stars||0;
+  document.getElementById("encouragementMessage").textContent=encouragementText(state.stars||0);
+}
+
+function startQuiz(id){
+  currentQuiz=quizzes.find(q=>q.id===id);
+  currentIndex=0;
+  sessionAnswers=new Array(currentQuiz.questions.length).fill(null);
+  sessionWordBank=currentQuiz.wordBank?shuffledWords(currentQuiz.wordBank):[];
+  renderSidebar();
+  renderQuestion();
+}
+
+
+function shuffledWords(words){
+  const copy=[...(words||[])];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function renderWholeStory(){
+  const main=document.getElementById("main");
+  const best=quizBest(currentQuiz.id);
+  sessionAnswers=new Array(currentQuiz.questions.length).fill(null);
+
+  let storyHtml;
+  if(currentQuiz.storyTemplate){
+    storyHtml=currentQuiz.storyTemplate.replace(/\{\{(\d+)\}\}/g,(match,index)=>{
+      const i=Number(index);
+      return `<input class="story-blank" id="storyBlank${i}" data-index="${i}" autocomplete="off" aria-label="Blank ${i+1}">`;
+    });
+  }else{
+    storyHtml=currentQuiz.questions.map((q,i)=>{
+      const sentence=q.prompt.replace("_____", `<input class="story-blank" id="storyBlank${i}" data-index="${i}" autocomplete="off" aria-label="Blank ${i+1}">`);
+      return `<span class="story-sentence">${sentence} </span>`;
+    }).join("");
+  }
+
+  main.innerHTML=`
+    <div class="toprow">
+      <div>
+        <span class="badge">Story cloze</span>
+        <h2>${currentQuiz.title}</h2>
+        <p class="muted">${currentQuiz.description}</p>
+      </div>
+      <div class="muted">${best===null?"No previous score":"Best score: "+best+"%"}</div>
+    </div>
+    <div class="word-bank">${sessionWordBank.map(w=>`<span class="word-chip">${w}</span>`).join("")}</div>
+    <div class="story-heading">
+      <strong>${currentQuiz.storyTitle}</strong>
+      <span class="muted">Read the complete story and fill each blank. Every word is used once.</span>
+    </div>
+    <div class="story-text">${storyHtml}</div>
+    <div id="storyFeedback" class="story-feedback-list"></div>
+    <div class="controls">
+      <button class="secondary" onclick="showScorebook()">View scorebook</button>
+      <button class="primary" id="checkStoryBtn">Check entire story</button>
+    </div>`;
+
+  document.getElementById("checkStoryBtn").onclick=checkWholeStory;
+}
+
+function checkWholeStory(){
+  let allFilled=true;
+  currentQuiz.questions.forEach((q,i)=>{
+    const input=document.getElementById(`storyBlank${i}`);
+    if(!normalise(input.value)) allFilled=false;
+  });
+  if(!allFilled){
+    const fb=document.getElementById("storyFeedback");
+    fb.innerHTML=`<div class="story-feedback-item bad"><strong>Complete every blank before checking the story. ✏️</strong></div>`;
+    playWrongSound();
+    return;
+  }
+
+  let correctCount=0;
+  const feedback=[];
+  currentQuiz.questions.forEach((q,i)=>{
+    const input=document.getElementById(`storyBlank${i}`);
+    const given=input.value;
+    const correct=normalise(given)===normalise(q.answer);
+    sessionAnswers[i]={correct,given};
+    input.disabled=true;
+    input.classList.add(correct?"correct":"incorrect");
+    if(correct){
+      correctCount++;
+      feedback.push(`<div class="story-feedback-item good"><strong>${i+1}. Correct:</strong> ${q.answer}. ${q.explanation}</div>`);
+    }else{
+      feedback.push(`<div class="story-feedback-item bad"><strong>${i+1}. Correct answer: ${q.answer}</strong>. ${q.explanation}</div>`);
+    }
+  });
+
+  document.getElementById("storyFeedback").innerHTML=feedback.join("");
+  document.getElementById("checkStoryBtn").outerHTML=`<button class="primary" id="finishStoryBtn">Finish quiz</button>`;
+  document.getElementById("finishStoryBtn").onclick=finishQuiz;
+
+  if(correctCount>0) addLearningStars(correctCount);
+  if(correctCount===currentQuiz.questions.length) playCorrectSound();
+  else playWrongSound();
+}
+
+function renderQuestion(){
+  if(currentQuiz.type==="story"){renderWholeStory();return}
+  const q=currentQuiz.questions[currentIndex];
+  const main=document.getElementById("main");
+  const best=quizBest(currentQuiz.id);
+  main.innerHTML=`
+    <div class="toprow">
+      <div>
+        <span class="badge">${currentQuiz.type==="mcq"?"MCQ":currentQuiz.type==="story"?"Story cloze":"Fill in the blank"}</span>
+        <h2>${currentQuiz.title}</h2>
+        <p class="muted">${currentQuiz.description}</p>
+      </div>
+      <div class="muted">${best===null?"No previous score":"Best score: "+best+"%"}</div>
+    </div>
+    ${currentQuiz.wordBank?`<div class="word-bank">${sessionWordBank.map(w=>`<span class="word-chip">${w}</span>`).join("")}</div>`:""}
+    <section class="question-card">
+      <div class="q-number">Question ${currentIndex+1} of ${currentQuiz.questions.length}</div>
+      <div class="prompt">${q.prompt}</div>
+      <div id="answerArea"></div>
+      <div id="feedback" class="feedback"></div>
+      <div class="controls">
+        <button class="secondary" id="prevBtn" ${currentIndex===0?"disabled":""}>Previous</button>
+        <div>
+          <button class="primary" id="checkBtn">Check answer</button>
+          <button class="primary hidden" id="nextBtn">${currentIndex===currentQuiz.questions.length-1?"Finish quiz":"Next question"}</button>
+        </div>
+      </div>
+    </section>`;
+  const area=document.getElementById("answerArea");
+  if(currentQuiz.type==="mcq"){
+    area.className="options";
+    q.options.forEach((opt,i)=>{
+      const btn=document.createElement("button");
+      btn.className="option";
+      btn.innerHTML=`<strong>${String.fromCharCode(65+i)}.</strong> ${opt}`;
+      btn.onclick=()=>{
+        if(document.getElementById("checkBtn").classList.contains("hidden")) return;
+        [...area.children].forEach(x=>x.classList.remove("selected"));
+        btn.classList.add("selected");
+        area.dataset.choice=i;
+      };
+      area.appendChild(btn);
+    });
+  }else{
+    area.innerHTML=`<input class="fill-input" id="fillInput" autocomplete="off" placeholder="Type your answer here">`;
+    document.getElementById("fillInput").addEventListener("keydown",e=>{if(e.key==="Enter") checkAnswer()});
+  }
+  document.getElementById("checkBtn").onclick=checkAnswer;
+  document.getElementById("nextBtn").onclick=nextQuestion;
+  document.getElementById("prevBtn").onclick=()=>{if(currentIndex>0){currentIndex--;renderQuestion()}};
+}
+
+function checkAnswer(){
+  const q=currentQuiz.questions[currentIndex];
+  const fb=document.getElementById("feedback");
+  let correct=false, given="";
+  if(currentQuiz.type==="mcq"){
+    const area=document.getElementById("answerArea");
+    if(area.dataset.choice===undefined){fb.className="feedback bad";fb.innerHTML="<strong>Select an answer first.</strong>";return}
+    given=Number(area.dataset.choice);
+    correct=given===q.answer;
+    [...area.children].forEach((btn,i)=>{
+      btn.classList.remove("selected");
+      if(i===q.answer) btn.classList.add("correct");
+      else if(i===given) btn.classList.add("incorrect");
+      btn.disabled=true;
+    });
+  }else{
+    const input=document.getElementById("fillInput");
+    given=input.value;
+    if(!normalise(given)){fb.className="feedback bad";fb.innerHTML="<strong>Type an answer first.</strong>";return}
+    correct=normalise(given)===normalise(q.answer);
+    input.disabled=true;
+    input.style.borderColor=correct?"var(--good)":"var(--bad)";
+  }
+  sessionAnswers[currentIndex]={correct,given};
+  if(correct){playCorrectSound();addLearningStars(1);} else playWrongSound();
+  fb.className="feedback "+(correct?"good":"bad");
+  fb.innerHTML=correct
+    ? `<strong>Correct.</strong> ${q.explanation}`
+    : `<strong>Not quite yet. 💪</strong> The correct answer is <strong>${currentQuiz.type==="mcq"?q.options[q.answer]:q.answer}</strong>. ${q.explanation}`;
+  document.getElementById("checkBtn").classList.add("hidden");
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+  if(currentIndex<currentQuiz.questions.length-1){currentIndex++;renderQuestion()}else finishQuiz();
+}
+
+function finishQuiz(){
+  const correct=sessionAnswers.filter(a=>a?.correct).length;
+  const total=currentQuiz.questions.length;
+  const pct=Math.round(correct/total*100);
+  const old=quizBest(currentQuiz.id);
+  const previous=state.quizScores[currentQuiz.id] || {best:null,last:null,attempts:[]};
+  previous.attempts = previous.attempts || [];
+  previous.attempts.push(pct);
+  previous.last=pct;
+  previous.best=old===null?pct:Math.max(old,pct);
+  state.quizScores[currentQuiz.id]=previous;
+
+  currentQuiz.questions.forEach((q,i)=>{
+    const word=questionWord(currentQuiz,q);
+    if(!state.wordStats[word]) state.wordStats[word]={correct:0,attempts:0};
+    state.wordStats[word].attempts += 1;
+    if(sessionAnswers[i]?.correct) state.wordStats[word].correct += 1;
+  });
+
+  save(); renderSidebar();
+  const main=document.getElementById("main");
+  const deg=pct*3.6;
+  main.innerHTML=`
+  <div class="summary">
+    <span class="badge">Quiz complete</span>
+    <h2>${currentQuiz.title}</h2>
+    <div class="score-ring" style="background:conic-gradient(var(--brand) ${deg}deg,#eceef2 ${deg}deg)">
+      <div class="score-ring-inner">${pct}%</div>
+    </div>
+    <p>You answered <strong>${correct} out of ${total}</strong> questions correctly.</p>
+    <p><strong>⭐ You earned ${correct} learning star${correct===1?"":"s"}!</strong></p>
+    <p class="muted">${pct>=80?"Strong performance. Review any missed words once more.":pct>=60?"Good progress. A second attempt will strengthen recall.":"Review the feedback, then try the quiz again."}</p>
+    <div class="controls" style="justify-content:center">
+      <button class="secondary" onclick="startQuiz('${currentQuiz.id}')">Try again</button>
+      <button class="primary" onclick="goNextQuiz()">Next quiz</button>
+    </div>
+    <div class="review">
+      <h3>Review</h3>
+      ${currentQuiz.questions.map((q,i)=>{
+        const a=sessionAnswers[i];
+        const correctText=currentQuiz.type==="mcq"?q.options[q.answer]:q.answer;
+        return `<div class="review-item"><strong>${i+1}. ${a?.correct?"✓":"✗"}</strong> ${q.prompt}
+        <div class="muted">Correct answer: ${correctText}. ${q.explanation}</div></div>`
+      }).join("")}
+    </div>
+  </div>`;
+}
+
+
+
+
+function wordVisual(word){
+  const visuals={
+    "abdicate":"👑➡️",
+    "abhor":"🤢🚫",
+    "caprice":"🎲💭",
+    "candour":"🗣️💡",
+    "defunct":"🏚️⛔",
+    "elapsed":"⏳⌛",
+    "emanated":"💡〰️",
+    "feud":"😠⚔️",
+    "facets":"💎🔷",
+    "incognito":"🕵️🎭",
+    "aggravate":"😣➕",
+    "bizarre":"🤪❓",
+    "sanctuary":"🏡🕊️",
+    "immersed":"🤿📚",
+    "raucous":"📣🔊",
+    "supplement":"➕📘",
+    "strenuous":"🏋️😓",
+    "agitate":"🌀😠",
+    "impede":"🚧🛑",
+    "hysterically":"😭📢",
+    "heatedly":"🔥🗣️",
+    "desperately":"🆘😰",
+    "savoured":"😋🍲",
+    "arbour":"🌿🏡",
+    "draped":"🧣🪑",
+    "perplexed":"🤔❓",
+    "guardedly":"🛡️👀",
+    "wary of":"⚠️👀",
+    "acute":"📐⚡",
+    "complement":"🧩✨",
+    "compelling":"🧲👀",
+    "wielded":"✋⚔️",
+    "floundered":"🌊😵",
+    "subdue":"🫳🦁",
+    "fickle":"🌦️🔄",
+    "pitch in":"🤝🧹",
+    "incessant":"🔁🔔",
+    "ominous":"🌩️😨",
+    "sceptical":"🤨❓",
+    "devoid":"📦⭕",
+    "ridicule":"😂👉",
+    "wavering":"〰️⚖️",
+    "incredulously":"😲❓",
+    "gullible":"🎣🙂",
+    "infallible":"✅🏆",
+    "rebelled":"✊🚫",
+    "shuddered":"🥶〰️",
+    "resent":"😒💢",
+    "reproach":"☝️😔",
+    "morale":"💪😊",
+    "instigated":"👉🔥",
+    "ignited":"🔥✨",
+    "reconciled":"🤝❤️",
+    "immobile":"🧍⛔",
+    "optimistic":"🌞⬆️",
+    "pessimistic":"🌧️⬇️",
+    "repulsive":"🤢↩️",
+    "relinquished":"✋📦➡️",
+    "disillusionment":"💭💔",
+    "sociologist":"👥🔍",
+    "proprietor":"🏪🔑",
+    "restrictions":"🚫📏",
+    "sentry":"🛡️🏰",
+    "deterrent":"⚠️🛑",
+    "hindrance":"🪨🚶",
+    "ventriloquist":"🗣️🧸",
+    "loathed":"😡🚫",
+    "pacify":"🕊️🤲",
+    "allay":"😌⬇️",
+    "restraint":"🛑🤐",
+    "relieve":"😮‍💨❤️"
+  };
+  return visuals[normalise(word)] || "🖼️💡";
+}
+
+function studySets(){
+  return quizzes
+    .filter(q=>q.type==="story")
+    .map((quiz,index)=>({
+      id:quiz.id,
+      title:`Set ${index+1}`,
+      subtitle:quiz.storyTitle,
+      quizTitle:quiz.title,
+      words:quiz.questions.map((question,i)=>({
+        word:question.answer,
+        meaning:question.explanation,
+        example:stripHtml(question.prompt.replace("_____", question.answer)),
+        number:i+1,
+        visual:wordVisual(question.answer)
+      }))
+    }));
+}
+
+let activeStudySet=0;
+let activeFlashcard=0;
+let flashcardRevealed=false;
+
+function speakWord(word,event){
+  if(event) event.stopPropagation();
+  if(!("speechSynthesis" in window)){
+    alert("Text-to-speech is not supported in this browser.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(word);
+  utterance.lang="en-GB";
+  utterance.rate=0.82;
+  window.speechSynthesis.speak(utterance);
+}
+
+function toggleLearned(word,event){
+  if(event) event.stopPropagation();
+  const key=normalise(word);
+  state.learnedWords[key]=!state.learnedWords[key];
+  save();
+  renderFlashcard();
+}
+
+function changeFlashcard(step,event){
+  if(event) event.stopPropagation();
+  const set=studySets()[activeStudySet];
+  activeFlashcard=Math.max(0,Math.min(activeFlashcard+step,set.words.length-1));
+  flashcardRevealed=false;
+  renderFlashcard();
+}
+
+function chooseStudySet(index){
+  activeStudySet=index;
+  activeFlashcard=0;
+  flashcardRevealed=false;
+  renderFlashcard();
+}
+
+function toggleFlashcard(){
+  flashcardRevealed=!flashcardRevealed;
+  renderFlashcard();
+}
+
+function showWordBank(setIndex=0){
+  const sets=studySets();
+  if(!sets.length) return;
+  activeStudySet=Math.max(0,Math.min(setIndex,sets.length-1));
+  activeFlashcard=0;
+  flashcardRevealed=false;
+  renderFlashcard();
+}
+
+function renderFlashcard(){
+  const sets=studySets();
+  const set=sets[activeStudySet];
+  const item=set.words[activeFlashcard];
+  const learned=!!state.learnedWords[normalise(item.word)];
+
+  const setButtons=sets.map((s,i)=>`
+    <button class="study-tab ${i===activeStudySet?"active":""}" onclick="chooseStudySet(${i})">
+      ${s.title}
+    </button>`).join("");
+
+  document.getElementById("main").innerHTML=`
+    <div class="toprow">
+      <div>
+        <span class="badge">Flashcard study mode</span>
+        <h2>Learn Word Bank</h2>
+        <p class="muted">Study one word at a time. Click the card to reveal or hide its meaning and example.</p>
+      </div>
+      <button class="secondary" onclick="startQuiz('${set.id}')">Attempt this set's quiz</button>
+    </div>
+
+    <div class="set-selector">${setButtons}</div>
+
+    <div class="flashcard-shell">
+      <div class="flashcard-progress">${set.title}: Word ${activeFlashcard+1} of ${set.words.length}</div>
+
+      <article class="flashcard" onclick="toggleFlashcard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFlashcard()}" role="button" tabindex="0">
+        <div class="flashcard-picture" aria-label="Picture clue for ${item.word}">
+          <span>${item.visual||wordVisual(item.word)}</span>
+        </div>
+        <div class="flashcard-picture-label">Picture clue</div>
+        <p class="flashcard-word">${item.word}</p>
+
+        ${flashcardRevealed ? `
+          <div class="flashcard-details">
+            <h4>Meaning</h4>
+            <p>${item.meaning}</p>
+            <h4>Example sentence</h4>
+            <p>${item.example}</p>
+          </div>
+          <div class="flashcard-hint">Click the card to hide the details.</div>
+        ` : `
+          <div class="flashcard-hint">Click the card to reveal the meaning and example.</div>
+        `}
+      </article>
+
+      <div class="flashcard-actions">
+        <button class="secondary" onclick="changeFlashcard(-1,event)" ${activeFlashcard===0?"disabled":""}>← Previous</button>
+        <button class="secondary" onclick="speakWord('${item.word.replace(/'/g,"\\'")}',event)">🔊 Pronounce</button>
+        <button class="secondary learned-btn ${learned?"is-learned":""}" onclick="toggleLearned('${item.word.replace(/'/g,"\\'")}',event)">
+          ${learned?"✓ Learnt":"Mark as learnt"}
+        </button>
+        <button class="secondary" onclick="changeFlashcard(1,event)" ${activeFlashcard===set.words.length-1?"disabled":""}>Next →</button>
+      </div>
+    </div>`;
+}
+
+let scorebookTab="scores";
+let masteryPage=0;
+const masteryPageSize=15;
+
+function switchScorebookTab(tab){
+  scorebookTab=tab;
+  renderScorebook();
+}
+
+function changeMasteryPage(step){
+  const total=masterySummary().words.length;
+  const maxPage=Math.max(0,Math.ceil(total/masteryPageSize)-1);
+  masteryPage=Math.max(0,Math.min(masteryPage+step,maxPage));
+  renderScorebook();
+}
+
+function showScorebook(){
+  scorebookTab="scores";
+  masteryPage=0;
+  renderScorebook();
+}
+
+function renderScorebook(){
+  currentQuiz=currentQuiz||quizzes[0];
+  renderSidebar();
+  const summary=masterySummary();
+
+  const quizRows=quizzes.map(q=>{
+    const record=state.quizScores[q.id]||{best:null,last:null,attempts:[]};
+    const history=(record.attempts||[]).map((s,i)=>`<span class="history-chip">#${i+1}: ${s}%</span>`).join(" ")||"No attempts";
+    return `<tr>
+      <td><strong>${q.title}</strong></td>
+      <td>${record.last===null?"—":record.last+"%"}</td>
+      <td>${record.best===null?"—":record.best+"%"}</td>
+      <td>${history}</td>
+    </tr>`;
+  }).join("");
+
+  const totalPages=Math.max(1,Math.ceil(summary.words.length/masteryPageSize));
+  if(masteryPage>=totalPages) masteryPage=totalPages-1;
+  const pageWords=summary.words.slice(masteryPage*masteryPageSize,(masteryPage+1)*masteryPageSize);
+
+  const wordRows=pageWords.map(word=>{
+    const stat=state.wordStats[word]||{correct:0,attempts:0};
+    const accuracy=stat.attempts?Math.round(stat.correct/stat.attempts*100):0;
+    const status=wordStatus(word);
+    const label=status==="mastered"?"Mastered":status==="almost"?"Almost mastered":status==="learning"?"Learning":"Not learnt";
+    const manuallyLearnt=!!state.learnedWords[normalise(word)];
+    return `<tr>
+      <td><strong>${word}</strong>${manuallyLearnt?' <span title="Marked as learnt">✓</span>':""}</td>
+      <td>${stat.correct} / ${stat.attempts}</td>
+      <td>${stat.attempts?accuracy+"%":"—"}</td>
+      <td><span class="status-pill status-${status}">${label}</span></td>
+    </tr>`;
+  }).join("");
+
+  document.getElementById("main").innerHTML=`
+    <div class="toprow">
+      <div>
+        <span class="badge">Progress record</span>
+        <h2>Student Scorebook</h2>
+        <p class="muted">Quiz performance and individual word mastery are organised separately for easier review.</p>
+      </div>
+    </div>
+
+    <div class="scorebook-tabs">
+      <button class="score-tab ${scorebookTab==="scores"?"active":""}" onclick="switchScorebookTab('scores')">Quiz Scores</button>
+      <button class="score-tab ${scorebookTab==="mastery"?"active":""}" onclick="switchScorebookTab('mastery')">Word Mastery</button>
+    </div>
+
+    <section class="score-panel ${scorebookTab==="scores"?"active":""}">
+      <div class="question-card">
+        <h3>Quiz scores and attempt history</h3>
+        <p class="muted">The panel scrolls when there are many quiz attempts.</p>
+        <div class="history-scroll">
+          <table class="score-table">
+            <thead><tr><th>Quiz</th><th>Latest</th><th>Best</th><th>Attempt history</th></tr></thead>
+            <tbody>${quizRows}</tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="score-panel ${scorebookTab==="mastery"?"active":""}">
+      <div class="question-card">
+        <h3>Vocabulary mastery</h3>
+        <p class="muted">
+          <strong>${summary.mastered}</strong> mastered ·
+          <strong>${summary.almost}</strong> almost mastered ·
+          <strong>${summary.learning}</strong> learning ·
+          <strong>${summary.unlearnt}</strong> not learnt
+        </p>
+        <div style="overflow-x:auto">
+          <table class="score-table">
+            <thead><tr><th>Word</th><th>Correct answers</th><th>Cumulative accuracy</th><th>Status</th></tr></thead>
+            <tbody>${wordRows}</tbody>
+          </table>
+        </div>
+        <div class="mastery-pagination">
+          <button class="secondary" onclick="changeMasteryPage(-1)" ${masteryPage===0?"disabled":""}>← Previous</button>
+          <span class="muted">Page ${masteryPage+1} of ${totalPages} · 15 words per page</span>
+          <button class="secondary" onclick="changeMasteryPage(1)" ${masteryPage===totalPages-1?"disabled":""}>Next →</button>
+        </div>
+      </div>
+    </section>`;
+}
+
+function goNextQuiz(){
+  const idx=quizzes.findIndex(q=>q.id===currentQuiz.id);
+  startQuiz(quizzes[(idx+1)%quizzes.length].id);
+}
+
+document.getElementById("wordBankBtn").onclick=()=>showWordBank(0);
+document.getElementById("scorebookBtn").onclick=showScorebook;
+
+document.getElementById("soundToggle").onclick=()=>{
+  soundEnabled = !soundEnabled;
+  safeStorage.set("vocabQuizSound", JSON.stringify(soundEnabled));
+  updateSoundButton();
+  if(soundEnabled) playTone(660, 0.12, "sine");
+};
+
+document.getElementById("resetAll").onclick=()=>{
+  if(confirm("Reset all saved scores and progress?")){
+    state={quizScores:{},wordStats:{},learnedWords:{},stars:0};save();renderSidebar();startQuiz(quizzes[0].id);
+  }
+};
+
+updateSoundButton();
+renderSidebar();
+startQuiz(quizzes[0].id);
+</script>
+</body>
+</html>
