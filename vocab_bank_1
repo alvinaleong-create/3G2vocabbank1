@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3PON Vocabulary Bank (Jul-Aug 2026)</title>
+<title>3G2 Vocabulary Bank 1 (Jul-Aug 2026)</title>
 <style>
 :root{
   --bg:#f5f7fb; --panel:#ffffff; --ink:#1d2939; --muted:#667085;
