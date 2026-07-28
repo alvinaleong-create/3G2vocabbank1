@@ -174,7 +174,7 @@ input{font-size:16px}
 <body>
 <header>
   <div class="header-inner">
-    <h1>3PON Vocabulary Bank (Jul-Aug 2026)</h1>
+    <h1>3G2 Vocabulary Bank (Jul-Aug 2026)</h1>
     <p>Learn vocabulary through sentences and stories, receive immediate feedback, and track mastery over time.</p>
     <p class="mobile-open-note">📱 On mobile, open this file in Safari or Chrome rather than the Files preview.</p>
   </div>
